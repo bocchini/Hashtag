@@ -1,20 +1,29 @@
 import flet as ft
 from flet import Page
-#59:15
+
 def main(pagina: Page):
   titulo = ft.Text('Zap')
   pagina.horizontal_alignment = 'center'
 
+  def enviar_mensagem(evento):
+    texto = ft.Text(campo_enviar_mensagem.value)
+    chat.controls.append(texto)
+    pagina.update()
+
   campo_enviar_mensagem = ft.TextField(label='Digite sua mensagem')
-  botao_enviar = ft.ElevatedButton('Enviar')
+  botao_enviar = ft.ElevatedButton('Enviar', on_click=enviar_mensagem)
+  linha_enviar = ft.Row([campo_enviar_mensagem, botao_enviar])
+
+  chat = ft.Column()
 
   def entrar_no_chat(evento):
     popup_flet.open = False
     pagina.remove(titulo)
     pagina.remove(botao)
     pagina.update()
-    pagina.add(campo_enviar_mensagem)
-    pagina.add(botao_enviar)
+    pagina.add(linha_enviar)
+    pagina.add(chat)
+    
 
   titulo_popup = ft.Text('Bem vindo ao Zap')
   caixa_nome = ft.TextField(label='Digite o seu nome')
